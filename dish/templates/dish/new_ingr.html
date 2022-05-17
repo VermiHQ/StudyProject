@@ -1,0 +1,13 @@
+{% extends 'dish/base.html' %}
+{% block Title %}
+Создание нового рецепта блюда
+{% endblock %}
+{% block Body %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <br><div>{{ field }} {{ field.label }}</div>
+        {% endfor %}
+    <input type="submit" value="Добавить ингредиент">
+    </form>
+{% endblock %}

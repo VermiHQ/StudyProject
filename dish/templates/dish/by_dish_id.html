@@ -1,0 +1,40 @@
+{% extends 'dish/base.html' %}
+{% block Title %}{{ current_dish.title }}{% endblock %}
+{% block Body %}
+    <h2>Блюдо: <u style="color: green;">{{ current_dish.title }}</u></h2>
+    <div>
+        <p><i>Автор: </i><a href="{% url 'dish:by_user' current_dish.author.id %}">{{ current_dish.author }}</a></p>
+        <ul style="border: 3px solid green; border-radius: 1em 2em 2em 1em; padding: 10px;"> <b>Ингредиенты: </b>
+            {% for ingr in current_ingr %}
+                <li style="margin-left: 40px;">{{ ingr }}</li>
+            {% endfor %}
+        </ul>
+        <p style="border: 3px solid green; border-radius: 2em 1em; padding: 10px;"><b>Рецепт: </b><br>
+        {{ current_dish.recipe }}</p>
+        {% if current_dish.image %}
+        Фото бдюда:<br>
+            <img src="{{ current_dish.image.url }}">
+        {% else %}
+            <i style="color: orange">Нет фото от пользователя.</i><br>
+        <br>
+        {% endif %}
+        {% if current_dish.check_updated %}
+        Опубликовано: {{ current_dish.published|date:"d.m.Y H:i:s" }}
+        {% else %}
+        Обновлено: {{ current_dish.update_date|date:"d.m.Y H:i:s" }}
+        {% endif %}
+        <br><hr style="background-color: #4B0082; height: 2px;"><span>Всего лаков: {{ current_dish.likes }}</span>
+        <br>{% if request.user.id %}
+            {% if request.user.id == current_dish.author.pk %}
+            <button type="button" onclick="location.href='{% url 'dish:update' current_dish.pk %}'">Обновить рецепт</button>
+            <button type="button" onclick="location.href='{% url 'dish:delete' current_dish.pk %}'">Удалить рецепт</button>
+            {% elif liked %}
+            <i style="color: blue">Вы уже поставили Лайк.</i>
+            {% else %}
+            <form action="{% url 'dish:like' current_dish.pk %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Поставить лайк">
+            </form>{% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

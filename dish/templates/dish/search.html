@@ -1,0 +1,22 @@
+{% extends 'dish/base.html' %}
+{% block Title %}Поиск рецептов{% endblock %}
+{% block Body %}
+    {% if query %}
+        <h2>Результаты поиска по ингредиенту, запрос: '{{ query }}'</h2>
+        <h3>Было найдено совпадений: {{ count }}</h3>
+        {% for d in results %}
+            <fieldset style="background:#E6E6FA; margin-left: 60px">
+			<legend><b><a href="{% url 'dish:by_dish_id' d.pk %}">{{ d.title }}</a></b></legend>
+			<p><i>Автор: </i><a href="{% url 'dish:by_user' d.author.id %}">{{ d.author }}</a></p>
+			{% if d.check_updated %}
+			Опубликовано: {{ d.published|date:"d.m.Y H:i:s" }}
+			{% else %}
+			Обновлено: {{ d.update_date|date:"d.m.Y H:i:s" }}
+			{% endif %}
+		    </fieldset>
+        {% empty %}
+            По вашему запросу ничего не найдено :(
+        {% endfor %}
+        {% include 'dish/pagination.html' with page=results query=query %}
+    {% endif %}
+{% endblock %}

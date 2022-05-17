@@ -1,0 +1,28 @@
+{% extends 'dish/base.html' %}
+{% block Title %}
+Создание нового рецепта блюда
+{% endblock %}
+{% block Body %}
+    <br>
+    <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        {% for field in form %}
+            <div>{{ field }} {{ field.label }}</div>
+            {% if field.label == 'Ингредиенты' %}
+                <br>
+                Чтобы выбрать несколько ингредиентов, зажмите ctrl и щелкните по нужным.
+                <br>
+                {% if not dish.id %}
+                    <button type="button" onclick="location.href='{% url 'dish:new_ingr' %}'">Добавить игредиент в общий список игредиентов</button>
+                {% endif %}
+            {% endif %}
+            <br>
+            <br>
+        {% endfor %}
+        {% if dish.id %}
+        <input type="submit" value="Обновить рецепт">
+        {% else %}
+        <input type="submit" value="Создать рецепт">
+        {% endif %}
+    </form>
+{% endblock %}

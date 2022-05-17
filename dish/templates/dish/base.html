@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block Title %}Блюда{% endblock %}</title>
+    <style type="text/css">
+    p {
+    border: 3px solid green;
+    border-radius: 2em;
+    padding: 10px;
+}
+    #head{
+    width: 100%;
+    height: 90px;
+    position: fixed;
+    left: 0; top: 0;
+    background: #8FBC8F;
+}
+   #content {
+    margin-top: 120px;
+    width: 1000px; /* Ширина слоя */
+    height: 950px;
+    margin-left:0px; /* отступ */
+    background: url("C:/Пользователи/User/PycharmProjects/FinalProject/Cooking/static/img/fon.jpg");
+    background-size: cover;
+   }
+   #footer {
+    position: fixed; /* Фиксированное положение */
+    left: 0; bottom: 0; /* Левый нижний угол */
+    background: #8FBC8F; /* Цвет фона */
+    color: green; /* Цвет текста */
+    width: 100%; /* Ширина слоя */
+   }
+    </style>
+</head>
+<body >
+    <div id="head">
+        {% include 'dish/nav.html' %}
+    </div>
+    <div id="content">
+        {% block Body %}
+        {% endblock %}
+    </div>
+    <div id="footer">
+        {% include 'dish/nav_bottom.html' %}
+    </div>
+</body>
+</html>

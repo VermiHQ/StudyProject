@@ -1,0 +1,23 @@
+{% extends 'authentification/base.html' %}
+{% block Title %}Log-In{% endblock %}
+{% block Body %}
+<br>
+    <form method="post" action="">
+        <fieldset>
+            <legend><strong>Login</strong></legend>
+            {% csrf_token %}
+            {% if form.errors %}
+                <p style="color: red"><b>Ошибка при авторизации! {{ form.errors }}</b></p>
+            {% endif %}
+            {% for message in messages %}
+                <p style="color: green">{{ message }}</p>
+            {% endfor %}
+            <label for="username">Имя пользователя:</label>
+            <input type="text" name="username" id="username">
+            <label for="password">Пароль:</label>
+            <input type="password" name="password" id="password">
+            <br><br>
+            <input type="submit" value="Авторизоваться">
+        </fieldset>
+    </form>
+{% endblock %}

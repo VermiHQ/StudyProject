@@ -1,0 +1,15 @@
+{% extends 'dish/base.html' %}
+{% block Title %}
+ Удаление рецепта "{{ current_dish.title }}"
+{% endblock %}
+{% block Body %}
+    <form action="" method="post">
+    {% csrf_token %}
+        <fieldset>
+            <legend>Вы уверены, что хотите удалить рецепт?</legend>
+            {{ form.as_p }}
+            <input type="submit" value="Удалить">
+            <input type="button" onclick="location.href='{% url 'dish:by_dish_id' dish.pk %}'" value="Отмена">
+        </fieldset>
+    </form>
+{% endblock %}

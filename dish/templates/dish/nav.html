@@ -1,0 +1,23 @@
+{% load static %}
+<nav style="margin-top:10px;">
+   <a href="{% url 'dish:index' %}" style="display:inline; margin-left: 20px;"><b>Главная</b></a>
+        <div style="display:inline; margin-left: 50px"><strong>Поиск:</strong>
+    <form class="d-flex" action="{% url 'dish:search' %}" method="get" style="display:inline;">
+        <input type="text" class="form-control me-2" name="query" placeholder="Введите ингредиент(-ы)" value="{{ query }}"/>
+        <input type="submit" class="btn btn-outline-success" value="Искать">
+    </form>
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'dish:by_user' user.pk %}" style="position: absolute; right:340px;">{{ request.user }} :: Мои рецепты</a>
+        <a href="{% url 'dish:new_dish' %}" style="position: absolute; right:215px;">Добавить рецепт</a>
+        <a href="{% url 'dish:by_user_like' user.pk %}" style="position: absolute; right:70px;">Лайкнутые рецепты</a>
+        <a href="{% url 'auth:logout' %}" style="position: absolute; right:20px;" >Выйти</a>
+    {% else %}
+        <a href="{% url 'auth:login' %}" >Войти</a>
+        <a href="{% url 'auth:reg' %}" >Регистрация</a>
+    {% endif %}</div><br>
+    <br>
+    <h3 style="display:inline;margin-left:10px">Категории:</h3>
+    {% for type in types %}
+        <a href="{% url 'dish:by_type' type.pk %}">{{ type.name }}</a>&nbsp;
+    {% endfor %}
+</nav>

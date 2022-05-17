@@ -1,0 +1,23 @@
+{% extends 'dish/base.html' %}
+{% block Title %}{{ current_type.name }} :: Список рецептов{% endblock %}
+{% block Body %}
+    <h2>Категория: {{ current_type.name }}</h2>
+    {% if ds %}
+     <ul>
+    {% for d in ds %}
+            <fieldset style="background:#E6E6FA; margin-left: 40px">
+			<legend><b><a href="{% url 'dish:by_dish_id' d.pk %}">{{ d.title }}</a></b></legend>
+			<p><i>Автор: </i><a href="{% url 'dish:by_user' d.author.id %}">{{ d.author }}</a></p>
+			{% if d.check_updated %}
+			Опубликовано: {{ d.published|date:"d.m.Y H:i:s" }}
+			{% else %}
+			Обновлено: {{ d.update_date|date:"d.m.Y H:i:s" }}
+			{% endif %}
+		    </fieldset>
+        </br>
+    {% endfor %}
+    </ul>
+    {% else %}
+    В данной категории пока не добавлено ни одного рецепта. :(
+    {% endif %}
+{% endblock %}

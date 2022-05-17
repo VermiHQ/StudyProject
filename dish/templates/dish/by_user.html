@@ -1,0 +1,19 @@
+{% extends 'dish/base.html' %}
+{% block Title %}{{ current_user.username }} :: Список рецептов{% endblock %}
+{% block Body %}
+    <h2>Пользователь - {{ current_user.username }}. Список рецептов:</h2>
+    <ul>
+    {% for d in ds %}
+        <fieldset style="background:#E6E6FA; margin-left: 40px">
+			<legend><b><a href="{% url 'dish:by_dish_id' d.pk %}">{{ d.title }}</a></b></legend>
+			<p><i>Автор: </i><a href="{% url 'dish:by_user' d.author.id %}">{{ d.author }}</a></p>
+			{% if d.check_updated %}
+			Опубликовано: {{ d.published|date:"d.m.Y H:i:s" }}
+			{% else %}
+			Обновлено: {{ d.update_date|date:"d.m.Y H:i:s" }}
+			{% endif %}
+        </fieldset>
+        </br>
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'dish/base.html' %}
+{% block Title %}Главная :: Блюда{% endblock %}
+{% block Body %}
+<div style="background: url("C:/Пользователи/User/PycharmProjects/FinalProject/Cooking/static/img/fon.jpg");">
+	<h3>Список блюд пользователей:</h3>
+	<ul style="padding: 0; margin-left: 60px;">
+	{% for d in ds %}
+		<fieldset style="border: 3px solid green; border-radius: 0em 3em 3em 2em; padding: 10px; background:#E6E6FA">
+			<legend><b><a href="{% url 'dish:by_dish_id' d.pk %}">{{ d.title }}</a></b></legend>
+			<p style="width: 400px;float: right;"><i>Автор: </i><a href="{% url 'dish:by_user' d.author.id %}">{{ d.author }}</a></p>
+			<p style="width: 400px;">Категория: <a href="{% url 'dish:by_type' d.type.id %}">{{ d.type }}</a></p>
+			{% if d.check_updated %}
+			Опубликовано: {{ d.published|date:"d.m.Y H:i:s" }}
+			{% else %}
+			Обновлено: {{ d.update_date|date:"d.m.Y H:i:s" }}
+			{% endif %}
+		</fieldset>
+	{% endfor %}
+	</ul>
+	{% include 'dish/pagination.html' with page=page_obj %}</div>
+{% endblock %}

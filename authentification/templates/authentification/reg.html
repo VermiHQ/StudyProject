@@ -1,0 +1,22 @@
+{% extends 'authentification/base.html' %}
+{% block Title %}Registration{% endblock %}
+{% block Body %}
+<br>
+    <form method="post" action="">
+        <fieldset>
+            <legend><strong>Register</strong></legend>
+            {% csrf_token %}
+            {% if form.errors %}
+                <p style="color: red"><b>Ошибка при регистрации! {{ form.errors }}</b></p>
+            {% endif %}
+            {% for message in messages %}
+                <p style="color: orange">{{ message }}</p>
+            {% endfor %}
+            {% for field in form %}
+                <div>{{ field }} {{ field.label }}</div>
+            <br>
+            {% endfor %}
+            <input type="submit" value="Зарегистрировать">
+        </fieldset>
+    </form>
+{% endblock %}
